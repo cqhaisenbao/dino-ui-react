@@ -1,3 +1,3 @@
 import './styles/index.scss';
 
-export { default as Foo } from './Foo';
+export { default as Button } from './lib/Button';
