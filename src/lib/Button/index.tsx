@@ -53,7 +53,6 @@ const Button: React.FC<ButtonProps> = (props) => {
 };
 
 Button.defaultProps = {
-  size: 'sm',
   buttonType: 'default',
   disabled: false,
 };
