@@ -1,15 +1,19 @@
 import React from 'react';
 import classNames from 'classnames';
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+type NativeButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
+type AnchorButtonProps = React.AnchorHTMLAttributes<HTMLAnchorElement>;
+type BaseButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;
+
+export interface ButtonProps extends BaseButtonProps {
   /**
    * @description 按钮大小
    */
-  size: 'lg' | 'sm';
+  size?: 'lg' | 'sm';
   /**
    * @description 按钮类型
    */
-  buttonType: 'primary' | 'default' | 'danger' | 'link';
+  buttonType?: 'primary' | 'default' | 'danger' | 'link';
   /**
    * @description 自定义className
    */
@@ -26,12 +30,12 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   /**
    * @description 按钮点击事件
    */
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
 }
 
 const Button: React.FC<ButtonProps> = (props) => {
-  const { size, disabled, buttonType, children, href } = props;
-  const classess = classNames('btn', {
+  const { size, className, disabled, buttonType, children, href, ...restProps } = props;
+  const classess = classNames('btn', className, {
     [`btn-${size}`]: size,
     [`btn-${buttonType}`]: buttonType,
     disabled: buttonType === 'link' && disabled,
@@ -39,13 +43,13 @@ const Button: React.FC<ButtonProps> = (props) => {
 
   if (buttonType === 'link') {
     return (
-      <a className={classess} href={href}>
+      <a className={classess} href={href} {...restProps}>
         {children}
       </a>
     );
   } else {
     return (
-      <button className={classess} disabled={disabled}>
+      <button className={classess} disabled={disabled} {...restProps}>
         {children}
       </button>
     );
