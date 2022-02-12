@@ -31,9 +31,9 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 const Button: React.FC<ButtonProps> = (props) => {
   const { size, disabled, buttonType, children, href } = props;
-  const classess = classNames('dino-btn', {
-    [`dino-btn-${size}`]: size,
-    [`dino-btn-${buttonType}`]: buttonType,
+  const classess = classNames('btn', {
+    [`btn-${size}`]: size,
+    [`btn-${buttonType}`]: buttonType,
     disabled: buttonType === 'link' && disabled,
   });
 
