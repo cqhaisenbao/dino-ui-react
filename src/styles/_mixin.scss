@@ -21,4 +21,9 @@ $hover-border:lighten($color,10%)) {
     color: $hover-color;
     border-color: $hover-border;
   }
+  &:disabled, &.disabled{
+    background-color: $background;
+    border-color: $border;
+    color: $color;
+  }
 }
