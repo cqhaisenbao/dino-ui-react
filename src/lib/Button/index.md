@@ -60,13 +60,4 @@ export default () => (
 );
 ```
 
-## Link按钮
-
-```tsx
-import React from 'react';
-import { Button } from 'dino-ui-react';
-
-export default () => <Button buttonType={'link'} href={'www.baidu.com'}>Link</Button>;
-```
-
 <API></API>
