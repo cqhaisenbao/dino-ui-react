@@ -11,11 +11,11 @@ path: /lib/menu
 import React from 'react';
 import { Menu, MenuItem } from 'dino-ui-react';
 
-export default () => <Menu defaultIndex={1}>
+export default () => <Menu mode={'vertical'} defaultIndex={1}>
   <MenuItem index={1}>
     <h6>首页1</h6>
   </MenuItem>
-  <MenuItem index={2}>
+  <MenuItem index={2} disabled>
     <h6>首页2</h6>
   </MenuItem>
   <MenuItem index={3}>
