@@ -1,5 +1,5 @@
 ---
-title: Menu 菜单
+title: Menu 菜单 
 path: /lib/menu
 ---
 
@@ -9,9 +9,19 @@ path: /lib/menu
 
 ```tsx
 import React from 'react';
-import { Menu } from 'dino-ui-react';
+import { Menu, MenuItem } from 'dino-ui-react';
 
-export default () => <Menu>默认按钮</Menu>;
+export default () => <Menu defaultIndex={1}>
+  <MenuItem index={1}>
+    <h6>首页1</h6>
+  </MenuItem>
+  <MenuItem index={2}>
+    <h6>首页2</h6>
+  </MenuItem>
+  <MenuItem index={3}>
+    <h6>首页3</h6>
+  </MenuItem>
+</Menu>;
 ```
 
 <API></API>
