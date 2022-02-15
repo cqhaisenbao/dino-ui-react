@@ -8,6 +8,7 @@ type SelectCallback = (selectedIndex: number) => void;
 interface IMenuContext {
   onSelect?: SelectCallback;
   activeKey?: number;
+  mode?: MenuMode;
 }
 
 export const MenuContext = createContext<IMenuContext>({});
@@ -32,6 +33,7 @@ const Menu: React.FC<MenuProps> = (props) => {
   const passedContext: IMenuContext = {
     onSelect: handleClick,
     activeKey: currentActive || 0,
+    mode,
   };
   const classes = classNames('dino-menu', className, {
     'menu-vertical': mode === 'vertical',
