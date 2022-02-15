@@ -11,7 +11,7 @@ path: /lib/menu
 import React from 'react';
 import { Menu, MenuItem } from 'dino-ui-react';
 
-export default () => <Menu defaultIndex={1}>
+export default () => <Menu defaultIndex={'1'}>
   <MenuItem>
     <h6>首页1</h6>
   </MenuItem>
@@ -30,7 +30,7 @@ export default () => <Menu defaultIndex={1}>
 import React from 'react';
 import { Menu, MenuItem, SubMenu } from 'dino-ui-react';
 
-export default () => <Menu mode='vertical' defaultIndex={1}>
+export default () => <Menu mode='vertical' defaultIndex={'1'} onSelect={(index)=>alert(index)}>
   <MenuItem>
     <h6>首页1</h6>
   </MenuItem>

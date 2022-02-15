@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { MenuContext } from './index';
 import classNames from 'classnames';
+import { MenuItemProps } from './MenuItem';
 
 export interface SubMenuProps {
   index?: string;
@@ -46,13 +47,23 @@ const SubMenu: React.FC<SubMenuProps> = ({ index, title, children, className }) 
           },
         }
       : {};
+  const childrenComponent = React.Children.map(children, (child, i) => {
+    const childElement = child as React.FunctionComponentElement<MenuItemProps>;
+    if (childElement.type.displayName === 'MenuItem') {
+      return React.cloneElement(childElement, {
+        index: `${index}-${i}`,
+      });
+    } else {
+      console.error('Warning: SubMenu has a child which is not a MenuItem component');
+    }
+  });
   return (
     <li key={index} className={classes} {...hoverEvents}>
       <div className="submenu-title" onClick={handleClick} {...clickEvents}>
-        {title}
+        <h6>{title}</h6>
         <i className={menuOpen ? 'icon-angle-up' : 'icon-angle-down'} />
       </div>
-      <ul className={subMenuClass}>{children}</ul>
+      <ul className={subMenuClass}>{childrenComponent}</ul>
     </li>
   );
 };
