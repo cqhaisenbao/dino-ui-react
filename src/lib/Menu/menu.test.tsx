@@ -1,35 +1,61 @@
-import Menu from "./index";
-import {render, screen} from "@testing-library/react";
-import React from "react";
-import MenuItem from "./MenuItem";
+import Menu, { MenuProps } from './index';
+import { cleanup, render, screen } from '@testing-library/react';
+import React from 'react';
+import MenuItem from './MenuItem';
 
-let menuElement: HTMLElement | null;
-let disabledMenuItem: HTMLElement | null;
+const testProps = {
+  defaultIndex: 0,
+  onSelect: jest.fn(),
+  className: 'test',
+};
+
+const testVerProps: MenuProps = {
+  defaultIndex: 0,
+  mode: 'vertical',
+};
+
+const generateMenu = (props: MenuProps) => {
+  return (
+    <Menu {...props}>
+      <MenuItem index={0}>active</MenuItem>
+      <MenuItem index={1} disabled>
+        disabled
+      </MenuItem>
+      <MenuItem index={2}>xyz</MenuItem>
+    </Menu>
+  );
+};
+
+let menuElement: HTMLElement, activeElement: HTMLElement, disabledElement: HTMLElement;
 
 describe('Menu test', () => {
   beforeEach(() => {
-    render(
-      <Menu className={'xx'}>
-        <MenuItem index={1} disabled>
-          <a href="#">
-            <span>disabled</span>
-          </a>
-        </MenuItem>
-        <MenuItem index={2}>
-          <a href="#">
-            <span>Menu Item</span>
-          </a>
-        </MenuItem>
-      </Menu>
-    );
-    menuElement = screen.getByRole('menu');
-    disabledMenuItem = screen.getByRole('menuitem',{name: 'disabled'});
+    render(generateMenu(testProps));
+    menuElement = screen.getByTestId('test-menu');
+    activeElement = screen.getByText('active');
+    disabledElement = screen.getByText('disabled');
   });
   it('should render correctly', () => {
     expect(menuElement).toBeInTheDocument();
-    expect(menuElement).toHaveClass('dino-menu xx');
+    expect(menuElement).toHaveClass('dino-menu test');
+    expect(menuElement.querySelectorAll(':scope > li').length).toEqual(3);
+    expect(activeElement).toHaveClass('menu-item is-active');
+    expect(disabledElement).toHaveClass('menu-item is-disabled');
   });
-  it('should render correctly when props have disabled', () => {
-    expect(disabledMenuItem).toHaveClass('is-disabled');
+  it('click items should change active and call the right callback', () => {
+    const thirdItem = screen.getByText('xyz');
+    thirdItem.click();
+    expect(thirdItem).toHaveClass('is-active');
+    expect(activeElement).not.toHaveClass('is-active');
+    expect(testProps.onSelect).toHaveBeenCalledWith(2);
+    disabledElement.click();
+    expect(disabledElement).not.toHaveClass('is-active');
+    expect(testProps.onSelect).not.toHaveBeenCalledWith(1);
+  });
+  it('should render vertical mode when mode is set to vertical', () => {
+    cleanup();
+    render(generateMenu(testVerProps));
+    const menuElement = screen.getByTestId('test-menu');
+    expect(menuElement).toHaveClass('menu-vertical');
   });
 });
