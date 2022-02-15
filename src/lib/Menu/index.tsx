@@ -37,7 +37,7 @@ const Menu: React.FC<MenuProps> = (props) => {
     'menu-horizontal': mode === 'horizontal',
   });
   return (
-    <ul className={classes} style={style}>
+    <ul className={classes} style={style} role={'menu'}>
       <MenuContext.Provider value={passedContext}>{children}</MenuContext.Provider>
     </ul>
   );
