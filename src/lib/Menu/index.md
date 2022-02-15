@@ -30,7 +30,8 @@ export default () => <Menu defaultIndex={'1'}>
 import React from 'react';
 import { Menu, MenuItem, SubMenu } from 'dino-ui-react';
 
-export default () => <Menu mode='vertical' defaultIndex={'1'} onSelect={(index)=>alert(index)}>
+export default () => <Menu mode='vertical' defaultIndex={'1'} onSelect={(index) => alert(index)}
+                           defaultOpenSubMenus={['2']}>
   <MenuItem>
     <h6>首页1</h6>
   </MenuItem>
