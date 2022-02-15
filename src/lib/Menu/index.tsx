@@ -35,14 +35,14 @@ const Menu: React.FC<MenuProps> = (props) => {
   };
   const classes = classNames('dino-menu', className, {
     'menu-vertical': mode === 'vertical',
-    'menu-horizontal': mode === 'horizontal',
+    'menu-horizontal': mode !== 'vertical',
   });
 
   const renderChildren = () => {
     return React.Children.map(children, (child, index) => {
       const childElement = child as React.FunctionComponentElement<MenuItemProps>;
       const { displayName } = childElement.type;
-      if (displayName === 'MenuItem') {
+      if (['MenuItem', 'SubMenu'].includes(displayName as string)) {
         return React.cloneElement(childElement, {
           index,
         });
