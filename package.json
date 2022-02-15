@@ -3,7 +3,7 @@
   "name": "dino-ui-react",
   "version": "1.0.0",
   "scripts": {
-    "postinstall": "husky install" ,
+    "postinstall": "husky install",
     "start": "dumi dev",
     "docs:build": "dumi build",
     "docs:deploy": "gh-pages -d docs-dist",
@@ -11,6 +11,7 @@
     "deploy": "npm run docs:build && npm run docs:deploy",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
     "test": "umi-test",
+    "jest": "react-scripts test --coverage",
     "test:coverage": "umi-test --coverage",
     "prepublishOnly": "npm run build"
   },
@@ -34,9 +35,12 @@
     ]
   },
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.16.7",
     "@umijs/plugin-sass": "^1.1.1",
     "dart-sass": "^1.25.0",
     "react": "^16.12.0 || ^17.0.0",
+    "react-dom": "^17.0.2",
+    "react-scripts": "^5.0.0",
     "sass": "^1.44.0"
   },
   "devDependencies": {
