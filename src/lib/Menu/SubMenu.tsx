@@ -63,7 +63,7 @@ const SubMenu: React.FC<SubMenuProps> = ({ index, title, children, className }) 
   });
   return (
     <li key={index} className={classes} {...hoverEvents}>
-      <div className="submenu-title" onClick={handleClick} {...clickEvents}>
+      <div className="submenu-title" onClick={handleClick} {...clickEvents} role={'submenu'}>
         <h6>{title}</h6>
         <i className={menuOpen ? 'icon-angle-up' : 'icon-angle-down'} />
       </div>
