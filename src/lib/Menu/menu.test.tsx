@@ -1,5 +1,5 @@
 import Menu, {MenuProps} from './index';
-import {cleanup, render, screen,fireEvent} from '@testing-library/react';
+import {cleanup, render, screen, fireEvent, waitFor} from '@testing-library/react';
 import React from 'react';
 import MenuItem from './MenuItem';
 import SubMenu from "./SubMenu";
@@ -95,13 +95,16 @@ describe('Menu test', () => {
     expect(titleElement).toBeInTheDocument()
     expect(subMenuElement).toHaveClass('submenu-item')
   });
+});
+
+describe('SubMenu test', () => {
   it('should console error when submenu have err child', function () {
     cleanup()
     render(subMenuErrorChild(testProps))
     const errorChild = screen.queryByText('首页3-1')
     expect(errorChild).toBeNull()
   });
-  it('hoverEvent should beCall when mode set to horizontal', function () {
+  it('hoverEvent should beCall when mode set to horizontal', async function () {
     cleanup()
     render(subMenu({
       ...testProps,
@@ -109,7 +112,36 @@ describe('Menu test', () => {
     }))
     const subMenuElement = screen.getByRole('submenu')
     fireEvent.mouseEnter(subMenuElement)
-    screen.debug(subMenuElement)
-    // expect(subMenuElement).toHaveClass('is-active')
+    await waitFor(() => expect(subMenuElement).toHaveClass('is-opened'), {
+      timeout: 1000,
+    })
+    fireEvent.mouseLeave(subMenuElement)
+    await waitFor(() => expect(subMenuElement).not.toHaveClass('is-opened'), {
+      timeout: 1000,
+    })
   })
-});
+  it('isOpened should true when defaultOpenSubMenus props be set', function () {
+    cleanup()
+    render(subMenu({
+      ...testVerProps,
+      defaultOpenSubMenus: ['2'],
+    }))
+    const subMenuElement = screen.getByRole('submenu')
+    expect(subMenuElement).toHaveClass('is-opened')
+  });
+  it('should have class is-open when defaultOpenSubMenus has been set', function () {
+    cleanup()
+    render(subMenu({
+      ...testVerProps,
+      defaultOpenSubMenus: ['2'],
+      mode: 'vertical'
+    }))
+    const titleElement = screen.getByRole('submenu-title')
+    const subMenuElement = screen.getByRole('submenu')
+    expect(subMenuElement).toHaveClass('is-opened')
+    fireEvent.click(titleElement)
+    expect(subMenuElement).not.toHaveClass('is-opened')
+    fireEvent.click(titleElement)
+    expect(subMenuElement).toHaveClass('is-opened')
+  });
+})
