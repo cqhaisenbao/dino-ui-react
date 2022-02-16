@@ -1,8 +1,23 @@
-import Menu, {MenuProps} from './index';
-import {cleanup, render, screen, fireEvent, waitFor} from '@testing-library/react';
+import Menu, { MenuProps } from './index';
+import { cleanup, render, screen, fireEvent, waitFor } from '@testing-library/react';
 import React from 'react';
 import MenuItem from './MenuItem';
-import SubMenu from "./SubMenu";
+import SubMenu from './SubMenu';
+
+const createStyleFile = () => {
+  const cssFile: string = `
+  .dino-submenu{
+    display: none;
+  }
+  .dino-submenu.menu-opened{
+    display: block;
+  }
+  `;
+  const style = document.createElement('style');
+  style.type = 'text/css';
+  style.innerHTML = cssFile;
+  return style;
+};
 
 const testProps = {
   defaultIndex: '0',
@@ -40,8 +55,8 @@ const subMenu = (props: MenuProps) => {
       </SubMenu>
       <MenuItem>xyz</MenuItem>
     </Menu>
-  )
-}
+  );
+};
 
 const subMenuErrorChild = (props: MenuProps) => {
   return (
@@ -51,8 +66,8 @@ const subMenuErrorChild = (props: MenuProps) => {
         <h6>首页3-1</h6>
       </SubMenu>
     </Menu>
-  )
-}
+  );
+};
 
 let menuElement: HTMLElement, activeElement: HTMLElement, disabledElement: HTMLElement;
 
@@ -87,61 +102,52 @@ describe('Menu test', () => {
     expect(menuElement).toHaveClass('menu-vertical');
   });
   it('should render subMenu correctly', function () {
-    cleanup()
-    render(subMenu(testProps))
-    const subMenuElement = screen.getByRole('submenu')
-    const titleElement = screen.getByText('dropdown')
-    screen.debug(titleElement)
-    expect(titleElement).toBeInTheDocument()
-    expect(subMenuElement).toHaveClass('submenu-item')
+    cleanup();
+    render(subMenu(testProps));
+    const subMenuElement = screen.getByRole('submenu');
+    const titleElement = screen.getByText('dropdown');
+    expect(titleElement).toBeInTheDocument();
+    expect(subMenuElement).toHaveClass('submenu-item');
   });
 });
 
 describe('SubMenu test', () => {
   it('should console error when submenu have err child', function () {
-    cleanup()
-    render(subMenuErrorChild(testProps))
-    const errorChild = screen.queryByText('首页3-1')
-    expect(errorChild).toBeNull()
+    cleanup();
+    render(subMenuErrorChild(testProps));
+    const errorChild = screen.queryByText('首页3-1');
+    expect(errorChild).toBeNull();
   });
   it('hoverEvent should beCall when mode set to horizontal', async function () {
-    cleanup()
-    render(subMenu({
-      ...testProps,
-      mode: 'horizontal',
-    }))
-    const subMenuElement = screen.getByRole('submenu')
-    fireEvent.mouseEnter(subMenuElement)
+    cleanup();
+    const wrapper = render(
+      subMenu({
+        ...testProps,
+        mode: 'horizontal',
+      }),
+    );
+    wrapper.container.appendChild(createStyleFile());
+    const subMenuElement = screen.getByRole('submenu');
+    fireEvent.mouseEnter(subMenuElement);
     await waitFor(() => expect(subMenuElement).toHaveClass('is-opened'), {
       timeout: 1000,
-    })
-    fireEvent.mouseLeave(subMenuElement)
-    await waitFor(() => expect(subMenuElement).not.toHaveClass('is-opened'), {
+    });
+    fireEvent.click(screen.getByText('首页3-1'));
+    expect(testProps.onSelect).toHaveBeenCalledWith('2-0');
+    fireEvent.mouseLeave(subMenuElement);
+    await waitFor(() => expect(screen.queryByText('首页3-1')).not.toBeVisible(), {
       timeout: 1000,
-    })
-  })
-  it('isOpened should true when defaultOpenSubMenus props be set', function () {
-    cleanup()
-    render(subMenu({
-      ...testVerProps,
-      defaultOpenSubMenus: ['2'],
-    }))
-    const subMenuElement = screen.getByRole('submenu')
-    expect(subMenuElement).toHaveClass('is-opened')
+    });
   });
   it('should have class is-open when defaultOpenSubMenus has been set', function () {
-    cleanup()
-    render(subMenu({
-      ...testVerProps,
-      defaultOpenSubMenus: ['2'],
-      mode: 'vertical'
-    }))
-    const titleElement = screen.getByRole('submenu-title')
-    const subMenuElement = screen.getByRole('submenu')
-    expect(subMenuElement).toHaveClass('is-opened')
-    fireEvent.click(titleElement)
-    expect(subMenuElement).not.toHaveClass('is-opened')
-    fireEvent.click(titleElement)
-    expect(subMenuElement).toHaveClass('is-opened')
+    cleanup();
+    const wrapper = render(
+      subMenu({
+        defaultOpenSubMenus: ['2'],
+        mode: 'vertical',
+      }),
+    );
+    wrapper.container.appendChild(createStyleFile());
+    expect(wrapper.getByText('首页3-1')).toBeVisible();
   });
-})
+});
