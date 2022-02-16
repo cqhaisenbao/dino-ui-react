@@ -1,5 +1,10 @@
 {
   "private": true,
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "/src/.umi/"
+    ]
+  },
   "name": "dino-ui-react",
   "version": "1.0.0",
   "scripts": {
@@ -11,7 +16,7 @@
     "deploy": "npm run docs:build && npm run docs:deploy",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
     "test": "umi-test",
-    "jest": "react-scripts test --coverage",
+    "jest-c": "react-scripts test --coverage",
     "test:coverage": "umi-test --coverage",
     "prepublishOnly": "npm run build"
   },
