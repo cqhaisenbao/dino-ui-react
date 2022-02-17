@@ -27,6 +27,7 @@ export default defineConfig({
           // 菜单子项（可选）
           '/lib/Button/index.md', // 对应的 Markdown 文件，路径是相对于 resolve.includes 目录识别的
           '/lib/Menu/index.md',
+          '/lib/Dialog/index.md',
         ],
       },
     ],
