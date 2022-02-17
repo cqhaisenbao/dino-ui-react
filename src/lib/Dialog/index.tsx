@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Button from '../Button';
+import classNames from 'classnames';
 
 export interface DialogProps {
   /**
@@ -54,12 +55,29 @@ const Dialog: React.FC<DialogProps> = (props) => {
   useEffect(() => {
     setMyVisible(visible);
   }, [visible]);
+
   const onClickOverlay = () => {
-    setMyVisible(false);
+    if (closeOnClickOverlay) {
+      setMyVisible(false);
+    }
   };
 
+  const [hoverClose, setHoverClose] = useState(false);
+  const classes = classNames('dino-dialog-close', {
+    'dino-dialog-close-hover': hoverClose,
+  });
+
   const Title = () => {
-    return <header>{title}</header>;
+    return (
+      <header>
+        {title}
+        <div
+          onMouseEnter={() => setHoverClose(true)}
+          onMouseLeave={() => setHoverClose(false)}
+          className={classes}
+        />
+      </header>
+    );
   };
 
   const Footer = () => {
@@ -77,9 +95,9 @@ const Dialog: React.FC<DialogProps> = (props) => {
         <div className="dino-dialog-overlay" onClick={onClickOverlay} />
         <div className="dino-dialog-wrapper">
           <div className="dino-dialog">
-            {Title()}
+            <Title />
             <main>{children}</main>
-            {Footer()}
+            <Footer />
           </div>
         </div>
       </div>

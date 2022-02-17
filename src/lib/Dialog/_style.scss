@@ -64,6 +64,15 @@ $radius: 4px;
       left: 50%;
     }
 
+
+    &-hover{
+
+      &::before,
+      &::after {
+        background: $link-color;
+      }
+    }
+
     &::before {
       transform: translate(-50%, -50%) rotate(-45deg);
     }
