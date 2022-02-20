@@ -12,6 +12,10 @@ export interface DialogProps {
    */
   visible?: boolean;
   /**
+   * @description       自定义footer
+   */
+  footer?: React.ReactNode;
+  /**
    * @description       点击遮罩是否可关闭
    */
   closeOnClickOverlay?: boolean;
@@ -43,6 +47,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
     visible,
     onCancel,
     onOk,
+    footer,
     okText,
     cancelText,
     width,
@@ -83,8 +88,14 @@ const Dialog: React.FC<DialogProps> = (props) => {
   const Footer = () => {
     return (
       <footer>
-        <Button>{cancelText ? cancelText : '取消'}</Button>
-        <Button buttonType="primary">{okText ? okText : '确认'}</Button>
+        {footer ? (
+          footer
+        ) : (
+          <>
+            <Button>{cancelText ? cancelText : '取消'}</Button>
+            <Button buttonType="primary">{okText ? okText : '确认'}</Button>
+          </>
+        )}
       </footer>
     );
   };
