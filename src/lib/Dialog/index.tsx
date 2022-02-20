@@ -92,7 +92,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
   const Dialog = () => {
     return (
       <div role={'dino-dialog'}>
-        <div className="dino-dialog-overlay" onClick={onClickOverlay} />
+        <div role="dino-dialog-overlay" className="dino-dialog-overlay" onClick={onClickOverlay} />
         <div className="dino-dialog-wrapper">
           <div className="dino-dialog">
             <Title />

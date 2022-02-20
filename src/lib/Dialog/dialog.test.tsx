@@ -10,13 +10,14 @@ const dialogRender = (props: DialogProps) => {
   );
 };
 
-const generateProps = {
+const generateProps: DialogProps = {
   visible: true,
+  closeOnClickOverlay: true,
 };
 
 let dialogElement: HTMLElement;
 
-describe('Dialog', () => {
+describe('Dialog test', () => {
   beforeEach(() => {
     render(dialogRender(generateProps));
     dialogElement = screen.getByRole('dino-dialog');
@@ -26,5 +27,10 @@ describe('Dialog', () => {
   });
   it('should render children', function () {
     expect(dialogElement).toHaveTextContent('Dialog');
+  });
+  it('should close dialog when click overlay', function () {
+    const overlay = screen.getByRole('dino-dialog-overlay');
+    overlay.click();
+    expect(dialogElement).not.toBeInTheDocument();
   });
 });
