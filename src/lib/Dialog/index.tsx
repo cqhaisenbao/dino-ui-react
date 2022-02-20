@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Button from '../Button';
 import classNames from 'classnames';
+import ReactDOM from 'react-dom';
 
 export interface DialogProps {
   /**
@@ -79,6 +80,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
         <div
           onMouseEnter={() => setHoverClose(true)}
           onMouseLeave={() => setHoverClose(false)}
+          onClick={() => setMyVisible(false)}
           className={classes}
         />
       </header>
@@ -114,7 +116,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
       </div>
     );
   };
-  return <>{myVisible ? Dialog() : ''}</>;
+  return <>{myVisible ? ReactDOM.createPortal(<Dialog />, document.body) : ''}</>;
 };
 
 Dialog.defaultProps = {
