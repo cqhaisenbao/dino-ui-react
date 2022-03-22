@@ -1,12 +1,12 @@
 {
-  "private": true,
   "jest": {
     "coveragePathIgnorePatterns": [
       "/src/.umi/"
     ]
   },
-  "name": "dino-ui-react",
-  "version": "1.0.0",
+  "private":false,
+  "name": "@yifui/react",
+  "version": "1.0.5",
   "scripts": {
     "postinstall": "husky install",
     "start": "dumi dev",
