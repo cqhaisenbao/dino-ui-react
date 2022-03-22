@@ -60,4 +60,18 @@ export default () => (
 );
 ```
 
+## Loading
+
+```tsx
+import React from 'react';
+import { Button } from 'dino-ui-react';
+
+export default () => (
+  <div>
+    <Button buttonType={'primary'} loading={true}>Loading</Button>
+    <Button loading={true}>Loading</Button>
+  </div>
+);
+```
+
 <API></API>

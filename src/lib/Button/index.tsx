@@ -22,6 +22,12 @@ export interface ButtonProps extends BaseButtonProps {
    * @description 是否禁用
    */
   disabled?: boolean;
+  /**
+   * @description 是否加载中
+   * @default false
+   * @example
+   */
+  loading?: boolean;
   children?: React.ReactNode;
   /**
    * @description 链接按钮href
@@ -34,11 +40,16 @@ export interface ButtonProps extends BaseButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = (props) => {
-  const { size, className, disabled, buttonType, children, href, ...restProps } = props;
+  const { size, className, disabled, buttonType, children, href, loading, ...restProps } = props;
   const classess = classNames('btn', className, {
     [`btn-${size}`]: size,
     [`btn-${buttonType}`]: buttonType,
     disabled: buttonType === 'link' && disabled,
+    loading: loading,
+  });
+
+  const loadingIndicatorClassess = classNames('btn-loadingIndicator', {
+    'btn-loadingIndicator-default': buttonType === 'default',
   });
 
   if (buttonType === 'link') {
@@ -50,6 +61,7 @@ const Button: React.FC<ButtonProps> = (props) => {
   } else {
     return (
       <button className={classess} disabled={disabled} {...restProps}>
+        <span className={loadingIndicatorClassess} />
         {children}
       </button>
     );
