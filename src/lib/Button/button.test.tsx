@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Button, { ButtonProps } from './index';
 
-const defaultProps = {
+const defaultProps: ButtonProps = {
   onClick: jest.fn(),
 };
 
@@ -13,45 +13,55 @@ const testProps: ButtonProps = {
   className: 'klass',
 };
 
+const linkProps: ButtonProps = {
+  href: 'http://www.baidu.com',
+  buttonType: 'link',
+};
+
 const disabledProps: ButtonProps = {
   disabled: true,
   onClick: jest.fn(),
 };
 
-describe('Button component test suite', () => {
-  it('should render the correct default button', () => {
-    const { getByText } = render(<Button {...defaultProps}>Click Me</Button>);
-    const buttonElement = getByText('Click Me');
-    expect(buttonElement).toBeInTheDocument();
-    expect(buttonElement.tagName).toEqual('BUTTON');
-    expect(buttonElement).toHaveClass('btn btn-default');
-    fireEvent.click(buttonElement);
+describe('test Button component', () => {
+  it('should render correct default button', function () {
+    const { getByText } = render(<Button {...defaultProps}>click</Button>);
+    const element = getByText('click') as HTMLButtonElement;
+    expect(element).toBeInTheDocument();
+    expect(element.tagName).toEqual('BUTTON');
+    expect(element).toHaveClass('btn btn-normal btn-default');
+    fireEvent.click(element);
     expect(defaultProps.onClick).toHaveBeenCalled();
   });
-  it('should render the correct component based on different props', () => {
-    const { getByText } = render(<Button {...testProps}>Click Me</Button>);
-    const buttonElement = getByText('Click Me');
-    expect(buttonElement).toBeInTheDocument();
-    expect(buttonElement).toHaveClass('btn-primary btn-lg klass');
+  it('should render correct component based on different props', function () {
+    const { getByText } = render(<Button {...testProps}>click</Button>);
+    const element = getByText('click') as HTMLButtonElement;
+    expect(element).toHaveClass('btn btn-primary btn-lg klass');
   });
-  it('should render a link when buttonType is link and href is provided', () => {
+  it('should render a link when buttonType equals link and href is provider', function () {
+    const { getByText } = render(<Button {...linkProps}>click</Button>);
+    const element = getByText('click') as HTMLButtonElement;
+    expect(element.tagName).toEqual('A');
+    expect(element).toHaveClass('btn btn-link');
+  });
+  it('should render disabled button when disabled set to true', function () {
+    const { getByText } = render(<Button {...disabledProps}>click</Button>);
+    const element = getByText('click') as HTMLButtonElement;
+    expect(element).toBeDisabled();
+    fireEvent.click(element);
+    expect(disabledProps.onClick).not.toHaveBeenCalled();
+  });
+  it('should render loading button when loading set to true', function () {
     const { getByText } = render(
-      <Button buttonType="link" href="https://www.google.com">
-        Click Me
+      <Button {...defaultProps} loading={true}>
+        click
       </Button>,
     );
-    const buttonElement = getByText('Click Me');
-    expect(buttonElement).toBeInTheDocument();
-    expect(buttonElement).toHaveClass('btn btn-link');
-    expect(buttonElement.getAttribute('href')).toEqual('https://www.google.com');
-    expect(buttonElement.tagName).toEqual('A');
-  });
-  it('should render disabled button when disabled is true', () => {
-    const { getByText } = render(<Button {...disabledProps}>Click Me</Button>);
-    const buttonElement = getByText('Click Me') as HTMLButtonElement;
-    expect(buttonElement).toBeInTheDocument();
-    expect(buttonElement.disabled).toBeTruthy();
-    fireEvent.click(buttonElement);
-    expect(disabledProps.onClick).not.toHaveBeenCalled();
+    const element = getByText('click') as HTMLButtonElement;
+    const loadingIndicator = element.querySelector('.btn-loadingIndicator') as HTMLSpanElement;
+    expect(element).toHaveClass('btn-loading');
+    expect(loadingIndicator).toBeInTheDocument();
+    fireEvent.click(element);
+    expect(defaultProps.onClick).not.toHaveBeenCalled();
   });
 });

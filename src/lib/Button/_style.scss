@@ -18,7 +18,7 @@
   transition: $btn-transition;
   outline: none!important;
 
-  &.loading{
+  &.btn-loading{
     cursor: not-allowed;
 
     .btn-loadingIndicator {

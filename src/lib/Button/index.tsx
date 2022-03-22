@@ -45,7 +45,7 @@ const Button: React.FC<ButtonProps> = (props) => {
     [`btn-${size}`]: size,
     [`btn-${buttonType}`]: buttonType,
     disabled: buttonType === 'link' && disabled,
-    loading: loading,
+    'btn-loading': loading,
   });
 
   const loadingIndicatorClassess = classNames('btn-loadingIndicator', {
