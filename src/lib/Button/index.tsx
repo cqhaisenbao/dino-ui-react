@@ -60,7 +60,7 @@ const Button: React.FC<ButtonProps> = (props) => {
 
   if (buttonType === 'link') {
     return (
-      <a className={classess} href={href} {...restProps}>
+      <a className={classess} href={href} {...restProps} onClick={onClickHandler}>
         {children}
       </a>
     );
