@@ -11,7 +11,7 @@ path: /lib/button
 import React from 'react';
 import { Button } from '@yifui/react';
 
-export default () => <Button disabled>按钮</Button>;
+export default () => <Button>按钮</Button>;
 ```
 
 ## 不同尺寸

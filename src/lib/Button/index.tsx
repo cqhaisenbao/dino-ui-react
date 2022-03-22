@@ -39,7 +39,8 @@ export interface ButtonProps extends BaseButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = (props) => {
-  const { size, className, disabled, buttonType, children, href, loading, ...restProps } = props;
+  const { size, className, disabled, buttonType, onClick, children, href, loading, ...restProps } =
+    props;
   const classess = classNames('btn', className, {
     [`btn-${size}`]: size,
     [`btn-${buttonType}`]: buttonType,
@@ -51,6 +52,12 @@ const Button: React.FC<ButtonProps> = (props) => {
     'btn-loadingIndicator-default': buttonType === 'default',
   });
 
+  const onClickHandler = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (loading) return;
+    if (onClick) onClick(e);
+  };
+
   if (buttonType === 'link') {
     return (
       <a className={classess} href={href} {...restProps}>
@@ -59,8 +66,8 @@ const Button: React.FC<ButtonProps> = (props) => {
     );
   } else {
     return (
-      <button className={classess} disabled={disabled} {...restProps}>
-        <span className={loadingIndicatorClassess} />
+      <button className={classess} disabled={disabled} onClick={onClickHandler} {...restProps}>
+        {loading && <span className={loadingIndicatorClassess} />}
         {children}
       </button>
     );
