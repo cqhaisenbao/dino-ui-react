@@ -6,7 +6,7 @@
   },
   "private": false,
   "name": "@yifui/react",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
