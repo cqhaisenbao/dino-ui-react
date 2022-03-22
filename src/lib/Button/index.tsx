@@ -9,7 +9,7 @@ export interface ButtonProps extends BaseButtonProps {
   /**
    * @description 按钮大小
    */
-  size?: 'lg' | 'sm';
+  size?: 'lg' | 'sm' | 'normal';
   /**
    * @description 按钮类型
    */
@@ -57,6 +57,7 @@ const Button: React.FC<ButtonProps> = (props) => {
 };
 
 Button.defaultProps = {
+  size: 'normal',
   buttonType: 'default',
   disabled: false,
 };
