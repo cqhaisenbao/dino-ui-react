@@ -29,4 +29,5 @@
 .prettierrc.js
 .prettierignore
 .umirc.ts
-commitlint.config
+commitlint.config.js
+tsconfig.json
