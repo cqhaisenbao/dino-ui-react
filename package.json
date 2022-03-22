@@ -6,13 +6,13 @@
   },
   "private": false,
   "name": "@yifui/react",
-  "version": "1.0.17",
+  "version": "1.2.2",
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
     "docs:deploy": "gh-pages -d docs-dist",
     "build": "father-build",
-    "publish": "npm version patch && npm publish",
+    "publish": "npm publish",
     "deploy": "npm run docs:build && npm run docs:deploy",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
     "test": "umi-test",
@@ -20,8 +20,8 @@
     "test:coverage": "umi-test --coverage",
     "prepublishOnly": "npm run build"
   },
-  "module": "es/index.js",
-  "typings": "es/index.d.ts",
+  "module": "lib/index.js",
+  "typings": "lib/index.d.ts",
   "gitHooks": {
     "pre-commit": "lint-staged",
     "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
