@@ -4,9 +4,9 @@
       "/src/.umi/"
     ]
   },
-  "private":false,
+  "private": false,
   "name": "@yifui/react",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "scripts": {
     "postinstall": "husky install",
     "start": "dumi dev",
