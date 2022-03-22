@@ -25,7 +25,6 @@ export interface ButtonProps extends BaseButtonProps {
   /**
    * @description 是否加载中
    * @default false
-   * @example
    */
   loading?: boolean;
   children?: React.ReactNode;
