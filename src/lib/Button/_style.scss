@@ -1,8 +1,6 @@
 .btn {
   min-width: 80px;
   position: relative;
-  margin-right: 8px;
-  margin-bottom: 12px;
   display: inline-block;
   font-weight: $btn-font-weight;
   line-height: $btn-line-height;
@@ -18,8 +16,36 @@
   transition: $btn-transition;
   outline: none!important;
 
+  &:hover::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(circle, #ccc 10%, transparent 10.1%);
+    transform: scale(10);
+    opacity: 0;
+    transition: all .6s;
+  }
+
+  &:active::after {
+    transform: scale(0);
+    opacity: .5;
+    transition: 0s;
+  }
+
+  & + &{
+    margin-left: 8px;
+  }
+
   &.btn-loading{
     cursor: not-allowed;
+
+    &:hover::after{
+      content:'';
+      background-image: none;
+    }
 
     .btn-loadingIndicator {
       margin-bottom: -1px;
