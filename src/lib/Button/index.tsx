@@ -53,7 +53,9 @@ const Button: React.FC<ButtonProps> = (props) => {
   });
 
   const onClickHandler = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
-    e.preventDefault();
+    if (buttonType === 'link' && href) {
+      e.preventDefault();
+    }
     if (loading) return;
     if (onClick) onClick(e);
   };
