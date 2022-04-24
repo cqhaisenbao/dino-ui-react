@@ -6,10 +6,10 @@ import SubMenu from './SubMenu';
 
 const createStyleFile = () => {
   const cssFile: string = `
-  .dino-submenu{
+  .yif-submenu{
     display: none;
   }
-  .dino-submenu.menu-opened{
+  .yif-submenu.menu-opened{
     display: block;
   }
   `;
@@ -80,7 +80,7 @@ describe('Menu test', () => {
   });
   it('should render correctly', () => {
     expect(menuElement).toBeInTheDocument();
-    expect(menuElement).toHaveClass('dino-menu test');
+    expect(menuElement).toHaveClass('yif-menu test');
     expect(menuElement.querySelectorAll(':scope > li').length).toEqual(3);
     expect(activeElement).toHaveClass('menu-item is-active');
     expect(disabledElement).toHaveClass('menu-item is-disabled');

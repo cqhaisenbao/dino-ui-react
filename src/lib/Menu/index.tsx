@@ -15,11 +15,23 @@ interface IMenuContext {
 export const MenuContext = createContext<IMenuContext>({});
 
 export interface MenuProps {
+  /**
+   * 当前默认选中项
+   */
   defaultIndex?: string;
   className?: string;
+  /**
+   * 菜单类型：水平/垂直
+   */
   mode?: MenuMode;
   style?: React.CSSProperties;
+  /**
+   * 选中后的回调
+   */
   readonly onSelect?: SelectCallback;
+  /**
+   * 垂直模式下是否展开子菜单
+   */
   defaultOpenSubMenus?: string[];
 }
 
@@ -38,7 +50,7 @@ const Menu: React.FC<MenuProps> = (props) => {
     mode,
     defaultOpenSubMenus,
   };
-  const classes = classNames('dino-menu', className, {
+  const classes = classNames('yif-menu', className, {
     'menu-vertical': mode === 'vertical',
     'menu-horizontal': mode !== 'vertical',
   });
