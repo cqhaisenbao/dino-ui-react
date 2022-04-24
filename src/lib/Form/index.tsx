@@ -16,28 +16,46 @@ interface FormProps {
   /**
    * @description 表单值
    */
-  values: {
+  value: {
     [key: string]: string;
   };
   /**
    * @description 表单按钮
    */
   buttons: React.ReactNode;
+  /**
+   * @description 表单变化时的回调
+   */
+  onChange: (value: Record<string, string>) => void;
 }
 
 const Form: React.FC<FormProps> = (props) => {
-  const { fields, buttons } = props;
+  const { fields, buttons, value: formValue, onChange } = props;
+
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => (name: string) => {
+    const { value } = e.target;
+    onChange({
+      ...formValue,
+      [name]: value,
+    });
+  };
+
+  const submit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    props.onSubmit(e);
+  };
+
   return (
-    <form>
-      {fields.map((field) => {
+    <form onSubmit={submit}>
+      {fields.map(({ name, label, type }) => {
         return (
-          <div key={field.name}>
-            <label>{field.label}</label>
-            <input type={field.type} />
+          <div key={name}>
+            <label>{label}</label>
+            <input onChange={(e) => onInputChange(e)(name)} type={type} value={formValue[name]} />
           </div>
         );
       })}
-      {buttons}
+      <div>{buttons}</div>
     </form>
   );
 };
