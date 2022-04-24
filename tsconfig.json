@@ -5,10 +5,12 @@
     "moduleResolution": "node",
     "jsx": "react",
     "esModuleInterop": true,
-    "types": ["jest","@testing-library/jest-dom"],
+    "types": ["jest", "@testing-library/jest-dom"],
     "strict": true,
     "skipLibCheck": true,
     "declaration": true,
+    "strictNullChecks": true,
+    "alwaysStrict": true,
     "noImplicitAny": true
   }
 }
