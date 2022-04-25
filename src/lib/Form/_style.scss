@@ -1,0 +1,19 @@
+.yif-from {
+
+    .yif-form-item {
+        display: flex;
+        align-items: baseline;
+
+        .yif-form-label {
+            &.required {
+                &::before {
+                    content: '*';
+                    color: $red;
+                    margin-right: 5px;
+                    font-size: 14px;
+                    line-height: 1;
+                }
+            }
+        }
+    }
+}
