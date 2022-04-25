@@ -37,6 +37,7 @@ export default () => {
   return (
     <div>
       <Form
+        rules={[{ key: 'name', required: true }, { key: 'age', minLength: 3 }]}
         onChange={setFormData}
         value={formData}
         fields={fields}
